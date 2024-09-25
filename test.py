@@ -19,7 +19,7 @@ def function2(input_list):
     list_length = 0
     for item in input_list:
         list_length += 1
-    for i in range(1, list_length - 1):  # Bug: Skips the last element
+    for i in range(1, list_length):  # Fixed: Include the last element
         if input_list[i] > max_value:
             max_value = input_list[i]
     return max_value
@@ -52,12 +52,12 @@ def function4(string1, string2):
         return False
     char_count1 = {}
     char_count2 = {}
-    for char in string1:  # Bug: Removed .lower()
+    for char in string1.lower():  # Fixed: Added .lower()
         if char in char_count1:
             char_count1[char] += 1
         else:
             char_count1[char] = 1
-    for char in string2:  # Bug: Removed .lower()
+    for char in string2.lower():  # Fixed: Added .lower()
         if char in char_count2:
             char_count2[char] += 1
         else:
@@ -83,8 +83,9 @@ def function6(input_list):
     largest = second_largest = float('-inf')
     for num in input_list:
         if num > largest:
+            second_largest = largest
             largest = num
-        elif num > second_largest:  # Bug: Removed 'and num != largest'
+        elif num > second_largest and num != largest:  # Fixed: Added 'and num != largest'
             second_largest = num
     if second_largest == float('-inf'):
         raise ValueError("There is no second largest element")
@@ -106,7 +107,7 @@ def function7(input_string):
             else:
                 word_freq[current_word] = 1
             current_word = ""
-    if current_word:
+    if current_word:  # Handle the last word
         if current_word in word_freq:
             word_freq[current_word] += 1
         else:
